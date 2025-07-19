@@ -6,41 +6,51 @@ import { debugLog, getHistoryStorageKey, getPendingQueueStorageKey, getWorkspace
 import { getValidatedConfig } from '../../core/config';
 import { enforceMessageSizeLimits } from '../memory';
 
+
 export function saveWorkspaceHistory(): void {
-    if (!extensionContext || !currentRun) return;
-    
-    const storageKey = getHistoryStorageKey();
-    const existingHistory = extensionContext.globalState.get<HistoryRun[]>(storageKey, []);
-    
-    // Apply size limits to messages before saving to history
-    const sizeLimitedMessages = messageQueue.map(msg => enforceMessageSizeLimits(msg));
-    
-    currentRun.messages = [...sizeLimitedMessages];
-    currentRun.totalMessages = messageQueue.length;
-    currentRun.completedMessages = messageQueue.filter(m => m.status === 'completed').length;
-    currentRun.errorMessages = messageQueue.filter(m => m.status === 'error').length;
-    currentRun.waitingMessages = messageQueue.filter(m => m.status === 'waiting').length;
-    
-    const existingIndex = existingHistory.findIndex(run => run.id === currentRun!.id);
-    if (existingIndex >= 0) {
-        existingHistory[existingIndex] = currentRun;
-    } else {
-        existingHistory.push(currentRun);
+    if (!extensionContext || !currentRun) {
+        debugLog(`⚠️ Cannot save workspace history: ${!extensionContext ? 'no extension context' : 'no current run'}`);
+        return;
     }
     
-    // Use the configuration for history limit
-    const config = getValidatedConfig();
-    const recentHistory = existingHistory.slice(-config.history.maxRuns);
-    
-    // Log memory cleanup if history was trimmed
-    if (existingHistory.length > config.history.maxRuns) {
-        const trimmedCount = existingHistory.length - config.history.maxRuns;
-        debugLog(`🧹 Trimmed ${trimmedCount} old history runs to prevent memory bloat`);
+    try {
+        const storageKey = getHistoryStorageKey();
+        const existingHistory = extensionContext.globalState.get<HistoryRun[]>(storageKey, []);
+        
+        // Apply size limits to messages before saving to history
+        const sizeLimitedMessages = messageQueue.map(msg => enforceMessageSizeLimits(msg));
+        
+        currentRun.messages = [...sizeLimitedMessages];
+        currentRun.totalMessages = messageQueue.length;
+        currentRun.completedMessages = messageQueue.filter(m => m.status === 'completed').length;
+        currentRun.errorMessages = messageQueue.filter(m => m.status === 'error').length;
+        currentRun.waitingMessages = messageQueue.filter(m => m.status === 'waiting').length;
+        
+        const existingIndex = existingHistory.findIndex(run => run.id === currentRun!.id);
+        if (existingIndex >= 0) {
+            existingHistory[existingIndex] = currentRun;
+        } else {
+            existingHistory.push(currentRun);
+        }
+        
+        // Use the configuration for history limit
+        const config = getValidatedConfig();
+        const recentHistory = existingHistory.slice(-config.history.maxRuns);
+        
+        // Log memory cleanup if history was trimmed
+        if (existingHistory.length > config.history.maxRuns) {
+            const trimmedCount = existingHistory.length - config.history.maxRuns;
+            debugLog(`🧹 Trimmed ${trimmedCount} old history runs to prevent memory bloat`);
+        }
+        
+        extensionContext.globalState.update(storageKey, recentHistory);
+        debugLog(`💾 Saved workspace history with ${recentHistory.length} runs`);
+        
+        savePendingQueue();
+    } catch (error) {
+        debugLog(`❌ Failed to save workspace history: ${error}`);
+        vscode.window.showErrorMessage(`Failed to save workspace history: ${error instanceof Error ? error.message : String(error)}`);
     }
-    
-    extensionContext.globalState.update(storageKey, recentHistory);
-    
-    savePendingQueue();
 }
 
 export function loadWorkspaceHistory(): void {
@@ -111,6 +121,12 @@ export function startNewHistoryRun(): void {
         waitingMessages: 0
     };
     setCurrentRun(run);
+}
+
+export function ensureHistoryRun(): void {
+    if (!currentRun) {
+        startNewHistoryRun();
+    }
 }
 
 export function endCurrentHistoryRun(): void {

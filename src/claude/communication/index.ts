@@ -3,7 +3,7 @@ import { MessageItem } from '../../core/types';
 import { messageQueue, claudeProcess, sessionReady, processingQueue, currentMessage, setCurrentMessage, setProcessingQueue } from '../../core/state';
 import { debugLog } from '../../utils/logging';
 import { updateWebviewContent, updateSessionState } from '../../ui/webview';
-import { saveWorkspaceHistory } from '../../queue/processor/history';
+import { saveWorkspaceHistory, ensureHistoryRun } from '../../queue/processor/history';
 import { TIMEOUT_MS, ANSI_CLEAR_SCREEN_PATTERNS } from '../../core/constants';
 import { startClaudeSession } from '../../claude/session';
 
@@ -337,6 +337,9 @@ function waitForPrompt(): Promise<void> {
 
 export async function startProcessingQueue(skipPermissions: boolean = true): Promise<void> {
     debugLog(`🚀 startProcessingQueue called with skipPermissions=${skipPermissions}`);
+    
+    // Start history tracking when processing begins (this is the meaningful start of a session)
+    ensureHistoryRun();
     
     if (!claudeProcess) {
         vscode.window.showInformationMessage('Starting Claude session...');
