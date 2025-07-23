@@ -39,11 +39,11 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Validate configuration on startup
     const config = getValidatedConfig();
-    debugLog('🔧 Extension activated with validated configuration');
+    debugLog('Extension activated with validated configuration');
 
     // Watch for configuration changes
     const configWatcher = watchConfigChanges((newConfig) => {
-        debugLog('🔧 Configuration updated, reloading settings...');
+        debugLog('Configuration updated, reloading settings...');
         
         // Update UI settings
         sendSecuritySettings();
@@ -130,7 +130,7 @@ function startClaudeAutopilot(context: vscode.ExtensionContext): void {
         sendSecuritySettings();
         sendHistoryVisibilitySettings();
         loadWorkspaceHistory();
-        debugLog('🔄 Webview state synchronized after reopening');
+        debugLog('Webview state synchronized after reopening');
         
         // Auto-start processing if configured
         const config = getValidatedConfig();
@@ -150,10 +150,13 @@ function startClaudeAutopilot(context: vscode.ExtensionContext): void {
                 case 'addMessage':
                     addMessageToQueueFromWebview(message.text);
                     break;
+                case 'getWorkspaceFiles':
+                    getWorkspaceFiles(message.query || '', message.page || 0);
+                    break;
                 case 'startProcessing':
                     startProcessingQueue(message.skipPermissions).catch(error => {
                         vscode.window.showErrorMessage(`Failed to start processing: ${error.message}`);
-                        debugLog(`❌ Error starting processing: ${error}`);
+                        debugLog(`Error starting processing: ${error}`);
                     });
                     break;
                 case 'stopProcessing':
@@ -168,7 +171,7 @@ function startClaudeAutopilot(context: vscode.ExtensionContext): void {
                 case 'startClaudeSession':
                     startClaudeSession(message.skipPermissions).catch(error => {
                         vscode.window.showErrorMessage(`Failed to start Claude session: ${error.message}`);
-                        debugLog(`❌ Error starting Claude session: ${error}`);
+                        debugLog(`Error starting Claude session: ${error}`);
                     });
                     break;
                 case 'claudeKeypress':
@@ -276,7 +279,7 @@ function startClaudeAutopilot(context: vscode.ExtensionContext): void {
 
     // Handle panel disposal
     panel.onDidDispose(() => {
-        debugLog('🪟 Webview panel disposed - cleaning up but keeping Claude session running');
+        debugLog('Webview panel disposed - cleaning up but keeping Claude session running');
         
         setClaudePanel(null);
         flushClaudeOutput();
@@ -288,6 +291,86 @@ function startClaudeAutopilot(context: vscode.ExtensionContext): void {
 
     setIsRunning(true);
     vscode.window.showInformationMessage('Claude Autopilot started');
+}
+
+async function getWorkspaceFiles(query: string, page: number = 0): Promise<void> {
+    try {
+        if (!claudePanel) {
+            return;
+        }
+
+        const excludePattern = '{node_modules,coverage,.git,dist,build,out,.vscode,.idea,.history,tmp,temp}/**';
+        
+        let files;
+        if (query.trim()) {
+            // Search for both files containing query AND files inside folders containing query
+            const [fileMatches, folderMatches] = await Promise.all([
+                vscode.workspace.findFiles(`**/*${query}*`, excludePattern, 500),
+                vscode.workspace.findFiles(`**/*${query}*/**`, excludePattern, 500)
+            ]);
+            files = [...fileMatches, ...folderMatches];
+        } else {
+            files = await vscode.workspace.findFiles('**/*', excludePattern, 1000);
+        }
+        const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri;
+        if (!workspaceRoot) {
+            claudePanel.webview.postMessage({
+                command: 'workspaceFilesResult',
+                files: [],
+                query: query
+            });
+            return;
+        }
+
+        let results = files
+            .map(file => ({
+                path: vscode.workspace.asRelativePath(file, false),
+                name: vscode.workspace.asRelativePath(file, false).split('/').pop() || ''
+            }))
+            .filter((file, index, self) => index === self.findIndex(f => f.path === file.path))
+            .sort((a, b) => {
+                if (!query.trim()) return a.path.localeCompare(b.path);
+                
+                const lowerQuery = query.toLowerCase();
+                const aNameMatch = a.name.toLowerCase().startsWith(lowerQuery);
+                const bNameMatch = b.name.toLowerCase().startsWith(lowerQuery);
+                
+                if (aNameMatch && !bNameMatch) return -1;
+                if (!aNameMatch && bNameMatch) return 1;
+                
+                return a.path.localeCompare(b.path);
+            });
+
+        const pageSize = 50;
+        const totalResults = results.length;
+        const totalPages = Math.ceil(totalResults / pageSize);
+        const paginatedFiles = results.slice(page * pageSize, (page + 1) * pageSize);
+
+        claudePanel.webview.postMessage({
+            command: 'workspaceFilesResult',
+            files: paginatedFiles,
+            query: query,
+            pagination: {
+                currentPage: page,
+                totalPages: totalPages,
+                totalResults: totalResults,
+                pageSize: pageSize,
+                hasNextPage: page < totalPages - 1,
+                hasPrevPage: page > 0
+            }
+        });
+
+    } catch (error) {
+        debugLog(`Error getting workspace files: ${error}`);
+        if (claudePanel) {
+            claudePanel.webview.postMessage({
+                command: 'workspaceFilesResult',
+                files: [],
+                query: query,
+                error: error instanceof Error ? error.message : String(error)
+            });
+        }
+    }
 }
 
 function stopClaudeAutopilot(): void {

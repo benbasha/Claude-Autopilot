@@ -782,3 +782,125 @@ select:focus {
                 box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* File autocomplete styles */
+.file-autocomplete-container {
+    font-family: var(--vscode-font-family);
+    font-size: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--vscode-widget-border);
+}
+
+.file-autocomplete-item {
+    padding: 6px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.file-autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.file-autocomplete-item:hover {
+    background-color: var(--vscode-list-hoverBackground);
+    transform: translateX(2px);
+}
+
+.file-autocomplete-item.selected {
+    background: linear-gradient(90deg, var(--vscode-list-activeSelectionBackground) 0%, rgba(0, 122, 255, 0.2) 100%);
+    color: var(--vscode-list-activeSelectionForeground);
+    border-left: 3px solid var(--vscode-focusBorder);
+    padding-left: 7px;
+    transform: translateX(2px);
+}
+
+.file-name {
+    font-weight: 500;
+    color: var(--vscode-foreground);
+    margin-bottom: 1px;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-autocomplete-item.selected .file-name {
+    color: var(--vscode-list-activeSelectionForeground);
+}
+
+.file-path {
+    font-size: 10px;
+    color: var(--vscode-descriptionForeground);
+    opacity: 0.7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-autocomplete-item.selected .file-path {
+    color: var(--vscode-list-activeSelectionForeground);
+    opacity: 0.8;
+}
+
+.file-autocomplete-loading,
+.file-autocomplete-empty {
+    padding: 8px 10px;
+    text-align: center;
+    color: var(--vscode-descriptionForeground);
+    font-style: italic;
+    font-size: 11px;
+}
+
+.file-autocomplete-loading {
+    color: var(--vscode-charts-blue);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.file-autocomplete-empty {
+    color: var(--vscode-charts-orange);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Infinite scroll styles */
+.file-autocomplete-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    background: var(--vscode-editor-background);
+    border-bottom: 1px solid var(--vscode-panel-border);
+    font-size: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.file-count {
+    color: var(--vscode-foreground);
+    font-weight: 500;
+}
+
+.loading-more {
+    color: var(--vscode-descriptionForeground);
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.file-autocomplete-loading-more {
+    padding: 8px 10px;
+    text-align: center;
+    color: var(--vscode-charts-blue);
+    font-style: italic;
+    font-size: 11px;
+    animation: pulse 1.5s ease-in-out infinite;
+    background: var(--vscode-editor-background);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
