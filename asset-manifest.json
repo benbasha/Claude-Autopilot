@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Claude-Autopilot/static/css/main.6ce86d03.css",
+    "main.js": "/Claude-Autopilot/static/js/main.bfd86dc8.js",
+    "index.html": "/Claude-Autopilot/index.html",
+    "main.6ce86d03.css.map": "/Claude-Autopilot/static/css/main.6ce86d03.css.map",
+    "main.bfd86dc8.js.map": "/Claude-Autopilot/static/js/main.bfd86dc8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6ce86d03.css",
+    "static/js/main.bfd86dc8.js"
+  ]
+}

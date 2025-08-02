@@ -1,0 +1,67 @@
+# VS Code extension ignore file
+.vscode/**
+.vscode-test/**
+
+# TypeScript source files (compiled JS is in out/)
+src/**
+tsconfig.json
+
+# Development and configuration files
+.git/**
+.gitignore
+.editorconfig
+.eslintrc*
+.prettierrc*
+.yarnrc
+vsc-extension-quickstart.md
+
+# Node modules and package files
+node_modules/**
+package-lock.json
+yarn.lock
+
+# Build and test files
+**/*.map
+**/.eslintrc.json
+test/**
+tests/**
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+coverage/**
+.nyc_output/**
+
+# Logs and temporary files
+*.log
+logs/**
+*.tmp
+*.temp
+*.tsbuildinfo
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+
+# Development documentation
+CLAUDE.md
+demo.md
+
+# IDE and editor files
+.idea/**
+.history/**
+.vscode/**
+
+# Package files
+*.vsix
+
+# Environment files
+.env*
+
+# Backup files
+*.bak
+*.backup
