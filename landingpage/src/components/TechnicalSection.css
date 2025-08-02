@@ -1,0 +1,114 @@
+.technical {
+    background: linear-gradient(180deg, rgba(22, 27, 34, 0.8) 0%, var(--bg-dark) 100%);
+}
+
+.technical-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.architecture,
+.compatibility {
+    background: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.architecture h3,
+.compatibility h3 {
+    font-size: 1.5rem;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.architecture ul,
+.compatibility ul {
+    list-style: none;
+    padding: 0;
+}
+
+.architecture li,
+.compatibility li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.architecture li::before,
+.compatibility li::before {
+    content: '⚡';
+    position: absolute;
+    left: 0;
+    color: var(--primary-cyan);
+}
+
+.code-preview {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.code-block {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.code-header {
+    background: linear-gradient(135deg, var(--primary-cyan), var(--accent-purple));
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.language,
+.filename {
+    color: var(--bg-dark);
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.code-block pre {
+    padding: 2rem;
+    margin: 0;
+    overflow-x: auto;
+}
+
+.code-block code {
+    font-family: var(--font-code);
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .technical-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .architecture,
+    .compatibility {
+        padding: 2rem;
+    }
+    
+    .code-block pre {
+        padding: 1.5rem;
+    }
+    
+    .code-block code {
+        font-size: 0.8rem;
+    }
+}

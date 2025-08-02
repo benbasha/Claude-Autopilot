@@ -1,0 +1,346 @@
+.mobile-control-special {
+    background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(13, 17, 23, 0.95) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+
+.mobile-subtitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--accent-purple);
+    margin-bottom: 1.5rem;
+}
+
+.mobile-description {
+    font-size: 1.125rem;
+    color: var(--text-light);
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.mobile-benefits {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.benefit {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(0, 212, 255, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.benefit-icon {
+    font-size: 1.5rem;
+}
+
+.benefit p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: var(--text-light);
+}
+
+.phone-demo-large {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.phone-frame {
+    width: 280px;
+    height: 560px;
+    background: linear-gradient(135deg, #2d3748, #1a202c);
+    border-radius: 32px;
+    padding: 12px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.phone-frame::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, var(--primary-cyan), var(--accent-purple));
+    border-radius: 34px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.phone-screen-large {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+}
+
+.mobile-app {
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.app-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.app-header h4 {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.status-indicator-control {
+    font-size: 0.8rem;
+    color: var(--success-green);
+    font-weight: 600;
+}
+
+.progress-section {
+    text-align: center;
+}
+
+.progress-label {
+    margin-top: 1rem;
+    color: var(--text-light);
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+.current-task {
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.task-status {
+    font-size: 0.8rem;
+    color: var(--primary-cyan);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.task-name {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    font-style: italic;
+}
+
+.task-progress-bar {
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.task-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
+    border-radius: 2px;
+}
+
+.queue-preview h5 {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.queue-item-mini {
+    background: rgba(123, 104, 238, 0.1);
+    border: 1px solid rgba(123, 104, 238, 0.2);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.mobile-controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.control-btn {
+    flex: 1;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, var(--primary-cyan), var(--accent-purple));
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.control-btn:hover {
+    transform: scale(1.02);
+}
+
+.control-btn.pause {
+    background: linear-gradient(135deg, var(--warning-yellow), var(--secondary-orange));
+}
+
+.mobile-scenarios {
+    margin-bottom: 5rem;
+}
+
+.mobile-scenarios h3 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--text-light);
+    margin-bottom: 3rem;
+}
+
+.scenarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.scenario-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.scenario-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-cyan);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+}
+
+.scenario-card .scenario-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.scenario-card h4 {
+    color: var(--text-light);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.scenario-card p {
+    color: var(--text-light);
+    opacity: 0.8;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.mobile-tech h3 {
+    text-align: center;
+    font-size: 2rem;
+    color: var(--text-light);
+    margin-bottom: 3rem;
+}
+
+.tech-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tech-step {
+    text-align: center;
+    flex: 1;
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.step-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.tech-step h4 {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.tech-step p {
+    color: var(--text-light);
+    opacity: 0.8;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.flow-arrow {
+    font-size: 1.5rem;
+    color: var(--primary-cyan);
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .mobile-hero {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+    
+    .phone-frame {
+        width: 240px;
+        height: 480px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-benefits {
+        grid-template-columns: 1fr;
+    }
+    
+    .scenarios-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .tech-flow {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .flow-arrow {
+        transform: rotate(90deg);
+    }
+    
+    .phone-frame {
+        width: 200px;
+        height: 400px;
+    }
+}

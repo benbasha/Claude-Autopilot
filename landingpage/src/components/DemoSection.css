@@ -1,0 +1,326 @@
+.demo {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.03), rgba(123, 104, 238, 0.03));
+}
+
+.demo-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    align-items: center;
+}
+
+.demo-video {
+    position: relative;
+}
+
+.video-placeholder {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 104, 238, 0.1));
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 4rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.video-placeholder:hover {
+    border-color: var(--primary-cyan);
+    transform: scale(1.02);
+}
+
+.video-placeholder.playing {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 104, 238, 0.1));
+}
+
+.play-button {
+    font-size: 4rem;
+    color: var(--primary-cyan);
+    margin-bottom: 1rem;
+    transition: var(--transition-smooth);
+}
+
+.video-placeholder:hover .play-button {
+    transform: scale(1.1);
+    color: var(--accent-purple);
+}
+
+.video-placeholder p {
+    font-size: 1.25rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.demo-video-player {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    margin: 0 auto;
+    display: block;
+}
+
+.demo-video-player:hover {
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+    border-color: var(--primary-cyan);
+}
+
+.video-playing {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.video-controls {
+    text-align: center;
+}
+
+.progress-line {
+    width: 200px;
+    height: 4px;
+    background: var(--border-color);
+    border-radius: 2px;
+    margin: 0 auto 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 60%;
+    background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
+    border-radius: 2px;
+    animation: progress-move 3s ease-in-out infinite;
+}
+
+@keyframes progress-move {
+    0% { width: 0%; }
+    50% { width: 60%; }
+    100% { width: 100%; }
+}
+
+.demo-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth);
+}
+
+.step:hover {
+    border-color: var(--primary-cyan);
+    transform: translateX(5px);
+}
+
+.step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-cyan), var(--accent-purple));
+    color: var(--bg-dark);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.step p {
+    color: var(--text-light);
+    font-weight: 600;
+    margin: 0;
+}
+
+.interactive-demo {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.fake-terminal {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.terminal-header {
+    background: linear-gradient(135deg, var(--primary-cyan), var(--accent-purple));
+    padding: 0.75rem 1rem;
+    color: var(--bg-dark);
+    font-weight: 600;
+}
+
+.terminal-content {
+    padding: 1.5rem;
+    font-family: var(--font-code);
+    font-size: 0.9rem;
+    min-height: 200px;
+}
+
+.terminal-line {
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.terminal-line .prompt {
+    color: var(--primary-cyan);
+    margin-right: 0.5rem;
+}
+
+.typing-line {
+    animation: typeIn 0.5s ease-in-out;
+}
+
+.typing {
+    display: flex;
+    align-items: center;
+}
+
+.cursor {
+    color: var(--primary-cyan);
+    animation: blink 1s infinite;
+}
+
+@keyframes typeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.phone-mockup-interactive {
+    background: linear-gradient(135deg, #2d3748, #1a202c);
+    border-radius: 24px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.phone-mockup-interactive:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.phone-screen {
+    background: linear-gradient(180deg, #0d1117 0%, #161b22 100%);
+    border-radius: 16px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.mobile-interface h4 {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 3px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-cyan), var(--accent-purple));
+    border-radius: 3px;
+}
+
+.mobile-interface p {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+.queue-item {
+    background: rgba(123, 104, 238, 0.1);
+    border: 1px solid rgba(123, 104, 238, 0.2);
+    border-radius: 6px;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.queue-item.active {
+    border-color: var(--primary-cyan);
+    background: rgba(0, 212, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .demo-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .interactive-demo {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .demo-content {
+        gap: 1.5rem;
+    }
+    
+    .demo-steps {
+        gap: 1rem;
+    }
+    
+    .step {
+        padding: 0.75rem;
+    }
+    
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .video-placeholder {
+        padding: 3rem 1.5rem;
+    }
+    
+    .play-button {
+        font-size: 3rem;
+    }
+}
